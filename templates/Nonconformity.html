@@ -24,6 +24,7 @@
   
   <button type="submit">Create Non-Conformity</button>
 </form>
+  <div id="nonconformityContainer"></div>
 
     <h1>Nonconformity Tracking</h1>
 
@@ -80,9 +81,15 @@ document.getElementById("nonconformityForm").addEventListener("submit", function
   // Create a new NonConformity object
   var nonconformity = new NonConformity(nonconformityId, description, impact);
 
-  // Perform further processing or submit the data to a server
-  // For example, you can make an AJAX request to send the data to the server
-  // or manipulate the DOM to display the created non-conformity
+  // Update the UI with the created non-conformity
+  var nonconformityContainer = document.getElementById("nonconformityContainer");
+  var nonconformityElement = document.createElement("div");
+  nonconformityElement.innerHTML = `
+    <h3>Non-Conformity ID: ${nonconformity.id}</h3>
+    <p>Description: ${nonconformity.description}</p>
+    <p>Impact: ${nonconformity.impact}</p>
+  `;
+  nonconformityContainer.appendChild(nonconformityElement);
 
   // Reset the form
   document.getElementById("nonconformityForm").reset();
