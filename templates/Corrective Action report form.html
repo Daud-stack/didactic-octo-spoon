@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Corrective Action Request</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: inline-block;
+      width: 250px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 500px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    .checkbox-group {
+      margin-bottom: 10px;
+    }
+
+    .checkbox-group label {
+      margin-right: 10px;
+    }
+/* ... Existing CSS styles ... */
+
+/* Adjustments for the bottom part of the form */
+.section-title {
+  margin-top: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  margin-top: 20px;
+  float: right;
+}
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CORRECTIVE ACTION REQUEST</h1>
+    <form>
+      <div class="form-group">
+        <label for="originator">CAR Originator:</label>
+        <input type="text" id="originator" name="originator" required>
+      </div>
+      <div class="form-group">
+        <label for="department">Department/Section:</label>
+        <input type="text" id="department" name="department" required>
+      </div>
+      <div class="form-group">
+        <label for="reference">CAR Reference:</label>
+        <input type="text" id="reference" name="reference" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required>
+      </div>
+
+      <div class="section-title">SECTION A</div>
+      <p>If Nonconformity is Minor tick here <input type="checkbox"> If Nonconformity is major tick here <input type="checkbox"></p>
+      <div class="form-group">
+        <label>How was the Nonconformity identified?</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox">Internal Audit</label>
+          <label><input type="checkbox">Management Review</label>
+          <label><input type="checkbox">Quality Control</label>
+          <label><input type="checkbox">Customer Complaints</label>
+          <label><input type="checkbox">Suppliers</label>
+          <label><input type="checkbox">EQA</label>
+          <label><input type="checkbox">Equipment</label>
+          <label><input type="checkbox">External Assessment</label>
+          <label><input type="checkbox">Other (Specify)</label>
+          <input type="text">
+        </div>
+      </div>
+
+      <div class="section-title">SECTION B - Detailed Description of Nonconformity and objective evidence</div>
+      <textarea></textarea>
+
+      <div class="section-title">SECTION C – What are the potential risks/hazards associated with non-conformance?</div>
+      <textarea></textarea>
+
+      <div class="section-title">SECTION D - Immediate action is taken to mitigate deficiency (Correction/Containment) if required</div>
+      <textarea></textarea>
+
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" required>
+      </div>
+      <div class="form-group">
+        <label for="target-date">Target implementation Date:</label>
+        <input type="text" id="target-date" name="target-date" required>
+      </div>
+
+      <div class="section-title">SECTION E– Comment on the possibility of the occurrence of the problem in other areas.</div>
+      <textarea></textarea>
+
+      <divclass="section-title">SECTION F – Root causes analysis method (select one method suitable for the identified NC )</div>
+      <div>
+        <label for="root-cause-method">Root causes analysis method:</label>
+        <select id="root-cause-method" name="root-cause-method">
+          <option value="5whys">5 Whys</option>
+          <option value="fishbone">Fishbone technique</option>
+          <option value="5whys-worksheet">5 WHYs Root Cause Analysis Worksheet</option>
+        </select>
+      </div>
+      <div id="fishbone-instructions" style="display: none;">
+        <p>How to use the fishbone</p>
+        <!-- Add fishbone instructions here -->
+      </div>
+
+      <div class="section-title">SECTION G- Root Cause(Please state the root cause determined above)</div>
+      <textarea></textarea>
+
+      <div class="form-group">
+        <label for="root-cause-confirmation">Confirmation of root cause by HOD:</label>
+        <input type="text" id="root-cause-confirmation" name="root-cause-confirmation">
+      </div>
+      <div class="form-group">
+        <label for="confirmation-date">Date:</label>
+        <input type="text" id="confirmation-date" name="confirmation-date">
+      </div>
+
+      <div class="section-title">SECTION H – Corrective action</div>
+      <table>
+        <tr>
+          <th>NO</th>
+          <th>Corrective action</th>
+          <th>Responsibility</th>
+          <th>Due Date</th>
+        </tr>
+        <tr>
+          <td>1.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        </tr>
+        <tr>
+          <td>2.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        </tr>
+        <tr>
+          <td>3.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        </tr>
+        <tr>
+          <td>4.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+        </tr>
+      </table>
+
+      <div class="section-title">SECTION I – What are the risks/hazards associated with non-conformance? (Conduct a risk assessment)</div>
+      <table>
+        <tr>
+          <th>Risk/s</th>
+          <th>Mitigation</th>
+        </tr>
+        <tr>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </table>
+
+      <div class="section-title">SECTION J - Monitoring the effectiveness of the corrective action</div>
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Date</th>
+          <th>Who</th>
+          <th>Comment(s)</th>
+        </tr>
+        <tr>
+          <td>1.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><textarea></textarea></td>
+        </tr>
+        <tr>
+          <td>2.</td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </table>
+
+      <div class="section-title">FOR QUALITY ASSURANCE OFFICE USE ONLY</div>
+      <div class="form-group">
+        <label for="verification-details">Details of Corrective Action Verification by Quality Assurance Coordinator:</label>
+        <textarea id="verification-details" name="verification-details"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="closed-not-closed">Closed/Not Closed:</label>
+        <input type="text" id="closed-not-closed" name="closed-not-closed">
+      </div>
+      <div class="form-group">
+        <label for="verification-date">Verified by:</label>
+        <input type="text" id="verification-date" name="verification-date">
+      </div>
+      <div class="form-group">
+        <label for="verification-date">Date:</label>
+        <input type="text" id="verification-date" name="verification-date">
+      </div>
+
+      <button type="submit">Submit</>

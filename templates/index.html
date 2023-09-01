@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nonconformity Tracking</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Nonconformity Tracking</h1>
+
+    <h2>Add Nonconformity</h2>
+    <form action="/add_nonconformity" method="POST">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required><br>
+
+        <label for="severity">Severity:</label>
+        <select id="severity" name="severity" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+   <h2>Nonconformities</h2>
+<ul>
+    {% for nonconformity in nonconformities %}
+    <li>Description: {{ nonconformity['description'] }}</li>
+    <li>Severity: {{ nonconformity['severity'] }}</li>
+    <br>
+    {% endfor %}
+</ul>
+
+<h2>Document Review and Approval</h2>
+<ul>
+    {% for document in documents %}
+    <li>
+        <h3>{{ document['title'] }}</h3>
+        <p>Author: {{ document['author'] }}</p>
+        <p>Status: {{ document['status'] }}</p>
+        <p>Version: {{ document['version'] }}</p>
+        <p>Description: {{ document['description'] }}</p>
+        <p>Content: {{ document['content'] }}</p>
+        
+        {% if document['status'] == 'Under Review' %}
+        <form action="/approve_document" method="POST">
+            <input type="hidden" name="document_id" value="{{ document['id'] }}">
+            <input type="submit" name="action" value="Approve">
+            <input type="submit" name="action" value="Reject">
+        </form>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

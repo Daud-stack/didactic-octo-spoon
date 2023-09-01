@@ -1,0 +1,35 @@
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+
+# Load data from your QMS system
+qms_data = pd.read_csv('qms_data.csv')  # Replace with your data source and format
+
+# Prepare data for visualization
+non_conformities_by_month = qms_data.groupby('Month')['Non-Conformities'].sum().reset_index()
+
+# Create the dashboard application
+app = dash.Dash(__name__)
+
+# Define the layout of the dashboard
+app.layout = html.Div(children=[
+    html.H1(children='QMS Analytics Dashboard'),
+    
+    html.Div(children='''
+        Non-Conformities by Month:
+    '''),
+    
+    dcc.Graph(
+        id='non-conformities-by-month',
+        figure=px.bar(non_conformities_by_month, x='Month', y='Non-Conformities', title='Non-Conformities by Month')
+    ),
+    
+    # Add more components and visualizations as needed
+    
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

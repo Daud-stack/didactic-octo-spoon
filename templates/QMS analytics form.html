@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QMS Report Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>QMS REPORT FORM</h1>
+    <form>
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required>
+      </div>
+      <div class="form-group">
+        <label for="report-type">Report Type:</label>
+        <input type="text" id="report-type" name="report-type" required>
+      </div>
+      <div class="form-group">
+        <label for="report-title">Report Title:</label>
+        <input type="text" id="report-title" name="report-title" required>
+      </div>
+      <div class="form-group">
+        <label for="report-description">Report Description:</label>
+        <textarea id="report-description" name="report-description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="report-author">Report Author:</label>
+        <input type="text" id="report-author" name="report-author" required>
+      </div>
+      <div class="form-group">
+        <label for="report-date">Report Date:</label>
+        <input type="text" id="report-date" name="report-date" required>
+      </div>
+      <div class="form-group">
+        <label for="approved-by">Approved By:</label>
+        <input type="text" id="approved-by" name="approved-by" required>
+      </div>
+      <div class="form-group">
+        <label for="approval-date">Approval Date:</label>
+        <input type="text" id="approval-date" name="approval-date" required>
+      </div>
+      <div class="form-group">
+        <label for="report-content">Report Content:</label>
+        <textarea id="report-content" name="report-content" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="attachments">Attachments:</label>
+        <input type="text" id="attachments" name="attachments" required>
+      </div>
+      <div class="form-group">
+        <label for="non-conformities-tally">Non-Conformities Tally:</label>
+        <textarea id="non-conformities-tally" name="non-conformities-tally" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
