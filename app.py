@@ -111,6 +111,45 @@ def perform_analysis():
    
     return jsonify(analysis_results), 200
 
+@app.route('/non-conformity', methods=['POST'])
+def create_non_conformity():
+    data = request.json
+    non_conformity = NonConformity(data['id'], data['description'], data['impact'])
+    # Perform any additional actions, such as assigning or closing the non-conformity
+    non_conformity.assign(data['assignee'])
+    non_conformity.close()
+    # Return a response
+    return jsonify({'message': 'Non-conformity created successfully.'}), 200
+
+@app.route('/document', methods=['POST'])
+def create_document():
+    data = request.json
+    document = Document(data['id'], data['title'], data['content'], data['version'])
+    # Perform any additional actions, such as approving or updating the document
+    document.approve()
+    document.update_content(data['new_content'])
+    # Return a response
+    return jsonify({'message': 'Document created successfully.'}), 200
+
+@app.route('/compliance', methods=['POST'])
+def update_compliance():
+    data = request.json
+    compliance_item = ComplianceItem(data['id'], data['name'], data['description'], data['status'])
+    # Perform any additional actions, such as updating the status of the compliance item
+    compliance_item.update_status(data['new_status'])
+    # Return a response
+    return jsonify({'message': 'Compliance item updated successfully.'}), 200
+
+@app.route('/corrective-action', methods=['POST'])
+def complete_corrective_action():
+    data = request.json
+    corrective_action = CorrectiveAction(data['id'], data['description'], data['due_date'], data['assigned_to'])
+    # Perform any additional actions, such as completing the corrective action
+    corrective_action.complete()
+    # Return a response
+    return jsonify({'message': 'Corrective action completed successfully.'}), 200
+
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True)
 
