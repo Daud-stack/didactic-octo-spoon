@@ -8,6 +8,23 @@
     </style>
 </head>
 <body>
+  <form id="nonconformityForm">
+  <label for="nonconformityId">ID:</label>
+  <input type="text" id="nonconformityId" name="nonconformityId" required>
+  
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" required></textarea>
+  
+  <label for="impact">Impact:</label>
+  <select id="impact" name="impact" required>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+  </select>
+  
+  <button type="submit">Create Non-Conformity</button>
+</form>
+
     <h1>Nonconformity Tracking</h1>
 
     <h2>Add Nonconformity</h2>
@@ -52,3 +69,22 @@
         </form>
 </body>
 </html>
+document.getElementById("nonconformityForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent the form from submitting
+
+  // Retrieve form data
+  var nonconformityId = document.getElementById("nonconformityId").value;
+  var description = document.getElementById("description").value;
+  var impact = document.getElementById("impact").value;
+
+  // Create a new NonConformity object
+  var nonconformity = new NonConformity(nonconformityId, description, impact);
+
+  // Perform further processing or submit the data to a server
+  // For example, you can make an AJAX request to send the data to the server
+  // or manipulate the DOM to display the created non-conformity
+
+  // Reset the form
+  document.getElementById("nonconformityForm").reset();
+});
+
