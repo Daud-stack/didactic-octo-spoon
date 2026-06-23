@@ -38,7 +38,7 @@ def login():
         password = request.form.get('password')
 
         user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -53,7 +53,7 @@ def logout():
 
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
@@ -65,7 +65,7 @@ documents=documents)
 
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
@@ -75,11 +75,13 @@ def approve_document():
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+        return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
 def perform_audit():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
    
     audit = Audit(audit_date=request.json['audit_date'],
                   auditor=request.json['auditor'],
@@ -92,6 +94,8 @@ def perform_audit():
 
 @app.route('/risk-assessment', methods=['POST'])
 def perform_risk_assessment():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     
     risk_assessment = RiskAssessment(process=request.json['process'],
                                      description=request.json['description'],
@@ -104,6 +108,8 @@ def perform_risk_assessment():
 
 @app.route('/analysis', methods=['POST'])
 def perform_analysis():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     
     analysis = Analysis(data=request.json['data'])
     analysis_results = analysis.analyze_data()
@@ -113,6 +119,8 @@ def perform_analysis():
 
 @app.route('/non-conformity', methods=['POST'])
 def create_non_conformity():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     data = request.json
     non_conformity = NonConformity(data['id'], data['description'], data['impact'])
     # Perform any additional actions, such as assigning or closing the non-conformity
@@ -123,6 +131,8 @@ def create_non_conformity():
 
 @app.route('/document', methods=['POST'])
 def create_document():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     data = request.json
     document = Document(data['id'], data['title'], data['content'], data['version'])
     # Perform any additional actions, such as approving or updating the document
@@ -133,6 +143,8 @@ def create_document():
 
 @app.route('/compliance', methods=['POST'])
 def update_compliance():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     data = request.json
     compliance_item = ComplianceItem(data['id'], data['name'], data['description'], data['status'])
     # Perform any additional actions, such as updating the status of the compliance item
@@ -142,6 +154,8 @@ def update_compliance():
 
 @app.route('/corrective-action', methods=['POST'])
 def complete_corrective_action():
+    if not is_authenticated():
+        return jsonify({'message': 'Unauthorized'}), 401
     data = request.json
     corrective_action = CorrectiveAction(data['id'], data['description'], data['due_date'], data['assigned_to'])
     # Perform any additional actions, such as completing the corrective action
@@ -150,16 +164,70 @@ def complete_corrective_action():
     return jsonify({'message': 'Corrective action completed successfully.'}), 200
 
 
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
 
+
+class Audit:
+    def __init__(self, audit_date, auditor, findings):
+        self.audit_date = audit_date
+        self.auditor = auditor
+        self.findings = findings
+    def add_finding(self, finding):
+        self.findings.append(finding)
+    def print_report(self):
+        pass
+
+class RiskAssessment:
+    def __init__(self, process, description, likelihood, impact):
+        self.process = process
+        self.description = description
+        self.likelihood = likelihood
+        self.impact = impact
+    def calculate_risk_level(self):
+        return 'high'
+
+class Analysis:
+    def __init__(self, data):
+        self.data = data
+    def analyze_data(self):
+        return {'status': 'success'}
+
+class NonConformity:
+    def __init__(self, id, description, impact):
+        self.id = id
+        self.description = description
+        self.impact = impact
+    def assign(self, assignee):
+        pass
+    def close(self):
+        pass
+
+class Document:
+    def __init__(self, id, title, content, version):
+        self.id = id
+        self.title = title
+        self.content = content
+        self.version = version
+    def approve(self):
+        pass
+    def update_content(self, new_content):
+        pass
+
+class ComplianceItem:
+    def __init__(self, id, name, description, status):
+        self.id = id
+        self.name = name
+        self.description = description
+        self.status = status
+    def update_status(self, new_status):
+        pass
+
+class CorrectiveAction:
+    def __init__(self, id, description, due_date, assigned_to):
+        self.id = id
+        self.description = description
+        self.due_date = due_date
+        self.assigned_to = assigned_to
+    def complete(self):
+        pass
 if __name__ == '__main__':
-    app.run(debug=True)
-{
-  "audit_date": "2023-09-01",
-  "auditor": "John Doe",
-  "findings": ["Finding 1", "Finding 2"]
-}
-{
-  "message": "Audit performed successfully."
-}
+    app.run(host='0.0.0.0', debug=True)
