@@ -8,25 +8,30 @@ documents = []
 app.secret_key = 'your_secret_key'
 
 users = [
-    {'username': 'reviewer1', 'password': bcrypt.hashpw('password1'.encode('utf-8'), bcrypt.gensalt())},
-    {'username': 'reviewer2', 'password': bcrypt.hashpw('password2'.encode('utf-8'), bcrypt.gensalt())}
+    {'username': 'reviewer1', 'password': bcrypt.hashpw(
+        'password1'.encode('utf-8'), bcrypt.gensalt())},
+    {'username': 'reviewer2', 'password': bcrypt.hashpw(
+        'password2'.encode('utf-8'), bcrypt.gensalt())}
 ]
+
 
 def is_authenticated():
     return 'username' in session
 
+
 @app.route("/")
 def Hello_qms():
   return render_template('home.html')
-  
 
 
+@app.route("/index")
 def index():
     if not is_authenticated():
         return redirect(url_for('login'))
 
     return render_template('index.html',
     nonconformities=nonconformities)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -37,8 +42,9 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        user = next(
+            (user for user in users if user['username'] == username and user['password'] == password), None)
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -46,36 +52,40 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
     nonconformity = {'description': description, 'severity': severity}
     nonconformities.append(nonconformity)
-    return redirect(url_for('index'))
+    return render_template('index.html', nonconformities=nonconformities, documents=documents)
     return render_template('index.html', nonconformities=nonconformities,
 documents=documents)
 
+
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
-    document = next((doc for doc in documents if doc['id'] == document_id), None)
+    document = next(
+        (doc for doc in documents if doc['id'] == document_id), None)
     if document:
         if action == 'Approve':
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+            return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
