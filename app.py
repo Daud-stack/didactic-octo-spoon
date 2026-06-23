@@ -7,10 +7,10 @@ nonconformities = []
 documents = []
 app.secret_key = 'your_secret_key'
 
-users = [
-    {'username': 'reviewer1', 'password': bcrypt.hashpw('password1'.encode('utf-8'), bcrypt.gensalt())},
-    {'username': 'reviewer2', 'password': bcrypt.hashpw('password2'.encode('utf-8'), bcrypt.gensalt())}
-]
+users = {
+    'reviewer1': {'username': 'reviewer1', 'password': bcrypt.hashpw('password1'.encode('utf-8'), bcrypt.gensalt())},
+    'reviewer2': {'username': 'reviewer2', 'password': bcrypt.hashpw('password2'.encode('utf-8'), bcrypt.gensalt())}
+}
 
 def is_authenticated():
     return 'username' in session
@@ -21,6 +21,8 @@ def Hello_qms():
   
 
 
+@app.route("/index")
+@app.route("/index")
 def index():
     if not is_authenticated():
         return redirect(url_for('login'))
@@ -37,8 +39,8 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        user = users.get(username)
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -53,7 +55,7 @@ def logout():
 
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
@@ -65,7 +67,7 @@ documents=documents)
 
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
@@ -75,7 +77,7 @@ def approve_document():
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+            return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
@@ -151,15 +153,4 @@ def complete_corrective_action():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-{
-  "audit_date": "2023-09-01",
-  "auditor": "John Doe",
-  "findings": ["Finding 1", "Finding 2"]
-}
-{
-  "message": "Audit performed successfully."
-}
+    app.run(host='0.0.0.0', debug=True)
