@@ -1,0 +1,10 @@
+🎯 **What:** The testing gap addressed
+The `is_authenticated` function in `app.py`, which determines whether a user is logged in by checking the session dictionary for a 'username' key, was previously untested. This PR adds test coverage for this function.
+
+📊 **Coverage:** What scenarios are now tested
+1. `test_is_authenticated_with_user`: Validates that the function correctly returns True when the 'username' key is populated in the Flask session.
+2. `test_is_authenticated_without_user`: Validates that the function correctly returns False when the session is empty.
+3. `test_is_authenticated_other_keys`: Validates that the function returns False when the session contains keys other than 'username'.
+
+✨ **Result:** The improvement in test coverage
+The critical authentication check function is now fully covered by automated tests, ensuring regressions can be caught automatically when making future changes to session management. Additionally, a few basic syntax and indentation errors within `app.py` were resolved to enable module loading for tests.
