@@ -1,0 +1,5 @@
+🔒 Add missing authentication checks for API endpoints
+
+🎯 What: Added missing authentication checks (is_authenticated()) to several API endpoints, particularly /risk-assessment, /audit, /analysis, /non-conformity, /document, /compliance, and /corrective-action.
+⚠️ Risk: Any user could access and submit arbitrary data to these endpoints without proper authorization, potentially causing data pollution and exposing sensitive application states.
+🛡️ Solution: The `is_authenticated()` check now correctly validates if the user has an active session before granting access to these routes. A 401 response is returned if the request is unauthenticated. Also corrected some pre-existing syntax errors due to wrong indentation.
