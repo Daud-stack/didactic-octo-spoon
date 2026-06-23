@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import bcrypt
+from dummy_models import Audit, RiskAssessment, Analysis, NonConformity, Document, ComplianceItem, CorrectiveAction
 
 
 app = Flask(__name__)
