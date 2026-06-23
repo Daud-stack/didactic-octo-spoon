@@ -2,15 +2,48 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 import bcrypt
 
 
+
+class Audit:
+    def __init__(self, audit_date, auditor, findings): pass
+    def add_finding(self, finding): pass
+    def print_report(self): pass
+
+class RiskAssessment:
+    def __init__(self, process, description, likelihood, impact): pass
+    def calculate_risk_level(self): return 'Low'
+
+class Analysis:
+    def __init__(self, data): pass
+    def analyze_data(self): return {'result': 'success'}
+
+class NonConformity:
+    def __init__(self, id, description, impact): pass
+    def assign(self, assignee): pass
+    def close(self): pass
+
+class Document:
+    def __init__(self, id, title, content, version): pass
+    def approve(self): pass
+    def update_content(self, new_content): pass
+
+class ComplianceItem:
+    def __init__(self, id, name, description, status): pass
+    def update_status(self, new_status): pass
+
+class CorrectiveAction:
+    def __init__(self, id, description, due_date, assigned_to): pass
+    def complete(self): pass
+
+
 app = Flask(__name__)
 nonconformities = []
 documents = []
 app.secret_key = 'your_secret_key'
 
-users = [
-    {'username': 'reviewer1', 'password': bcrypt.hashpw('password1'.encode('utf-8'), bcrypt.gensalt())},
-    {'username': 'reviewer2', 'password': bcrypt.hashpw('password2'.encode('utf-8'), bcrypt.gensalt())}
-]
+users = {
+    'reviewer1': {'username': 'reviewer1', 'password': bcrypt.hashpw('password1'.encode('utf-8'), bcrypt.gensalt())},
+    'reviewer2': {'username': 'reviewer2', 'password': bcrypt.hashpw('password2'.encode('utf-8'), bcrypt.gensalt())}
+}
 
 def is_authenticated():
     return 'username' in session
@@ -21,6 +54,8 @@ def Hello_qms():
   
 
 
+@app.route("/index")
+@app.route("/index")
 def index():
     if not is_authenticated():
         return redirect(url_for('login'))
@@ -37,8 +72,8 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        user = users.get(username)
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -53,7 +88,7 @@ def logout():
 
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
@@ -65,7 +100,7 @@ documents=documents)
 
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
@@ -75,7 +110,7 @@ def approve_document():
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+            return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
@@ -151,15 +186,4 @@ def complete_corrective_action():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-{
-  "audit_date": "2023-09-01",
-  "auditor": "John Doe",
-  "findings": ["Finding 1", "Finding 2"]
-}
-{
-  "message": "Audit performed successfully."
-}
+    app.run(host='0.0.0.0', debug=True)
