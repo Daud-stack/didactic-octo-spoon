@@ -7,6 +7,10 @@ authors = ["Replit user <<>>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Flask = "^2.2.3"
+bcrypt = "^5.0.0"
+pytest = "^9.1.1"
+pytest-mock = "^3.15.1"
+mock = "^5.2.0"
 
 [tool.poetry.dev-dependencies]
 
