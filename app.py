@@ -2,6 +2,39 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 import bcrypt
 
 
+
+class Audit:
+    def __init__(self, audit_date, auditor, findings): pass
+    def add_finding(self, finding): pass
+    def print_report(self): pass
+
+class RiskAssessment:
+    def __init__(self, process, description, likelihood, impact): pass
+    def calculate_risk_level(self): return 'Low'
+
+class Analysis:
+    def __init__(self, data): pass
+    def analyze_data(self): return {'result': 'success'}
+
+class NonConformity:
+    def __init__(self, id, description, impact): pass
+    def assign(self, assignee): pass
+    def close(self): pass
+
+class Document:
+    def __init__(self, id, title, content, version): pass
+    def approve(self): pass
+    def update_content(self, new_content): pass
+
+class ComplianceItem:
+    def __init__(self, id, name, description, status): pass
+    def update_status(self, new_status): pass
+
+class CorrectiveAction:
+    def __init__(self, id, description, due_date, assigned_to): pass
+    def complete(self): pass
+
+
 app = Flask(__name__)
 nonconformities = []
 documents = []
