@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import bcrypt
 
+from dummy_classes import Audit, RiskAssessment, Analysis, NonConformity, Document, ComplianceItem, CorrectiveAction
 
 app = Flask(__name__)
 nonconformities = []
