@@ -35,7 +35,7 @@
 
 <h2>Document Review and Approval</h2>
 <ul>
-    {% for document in documents %}
+    {% for document in documents.values() %}
     <li>
         <h3>{{ document['title'] }}</h3>
         <p>Author: {{ document['author'] }}</p>
