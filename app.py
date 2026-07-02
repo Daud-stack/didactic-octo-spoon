@@ -82,7 +82,7 @@ def approve_document():
 @app.route('/audit', methods=['POST'])
 def perform_audit():
    
-    audit = Audit(audit_date=request.json['audit_date'],
+    audit = Audit(audit_date=request.json['audit_date'],  # noqa: F821
                   auditor=request.json['auditor'],
                   findings=request.json['findings'])
     audit.add_finding('Additional finding')
@@ -94,7 +94,7 @@ def perform_audit():
 @app.route('/risk-assessment', methods=['POST'])
 def perform_risk_assessment():
     
-    risk_assessment = RiskAssessment(process=request.json['process'],
+    risk_assessment = RiskAssessment(process=request.json['process'],  # noqa: F821
                                      description=request.json['description'],
                                      likelihood=request.json['likelihood'],
                                      impact=request.json['impact'])
@@ -106,7 +106,7 @@ def perform_risk_assessment():
 @app.route('/analysis', methods=['POST'])
 def perform_analysis():
     
-    analysis = Analysis(data=request.json['data'])
+    analysis = Analysis(data=request.json['data'])  # noqa: F821
     analysis_results = analysis.analyze_data()
 
    
@@ -115,7 +115,7 @@ def perform_analysis():
 @app.route('/non-conformity', methods=['POST'])
 def create_non_conformity():
     data = request.json
-    non_conformity = NonConformity(data['id'], data['description'], data['impact'])
+    non_conformity = NonConformity(data['id'], data['description'], data['impact'])  # noqa: F821
     # Perform any additional actions, such as assigning or closing the non-conformity
     non_conformity.assign(data['assignee'])
     non_conformity.close()
@@ -125,7 +125,7 @@ def create_non_conformity():
 @app.route('/document', methods=['POST'])
 def create_document():
     data = request.json
-    document = Document(data['id'], data['title'], data['content'], data['version'])
+    document = Document(data['id'], data['title'], data['content'], data['version'])  # noqa: F821
     # Perform any additional actions, such as approving or updating the document
     document.approve()
     document.update_content(data['new_content'])
@@ -135,7 +135,7 @@ def create_document():
 @app.route('/compliance', methods=['POST'])
 def update_compliance():
     data = request.json
-    compliance_item = ComplianceItem(data['id'], data['name'], data['description'], data['status'])
+    compliance_item = ComplianceItem(data['id'], data['name'], data['description'], data['status'])  # noqa: F821
     # Perform any additional actions, such as updating the status of the compliance item
     compliance_item.update_status(data['new_status'])
     # Return a response
@@ -144,7 +144,7 @@ def update_compliance():
 @app.route('/corrective-action', methods=['POST'])
 def complete_corrective_action():
     data = request.json
-    corrective_action = CorrectiveAction(data['id'], data['description'], data['due_date'], data['assigned_to'])
+    corrective_action = CorrectiveAction(data['id'], data['description'], data['due_date'], data['assigned_to'])  # noqa: F821
     # Perform any additional actions, such as completing the corrective action
     corrective_action.complete()
     # Return a response

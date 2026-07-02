@@ -1,5 +1,0 @@
-🎯 **What:** The Flask `app.secret_key` was hardcoded as a plain text string (`'your_secret_key'`) within the codebase.
-
-⚠️ **Risk:** Hardcoding a secret key in source code makes it easily discoverable to anyone with access to the repository. An attacker who obtains this key could forge session cookies, hijack user sessions, and potentially gain unauthorized access to administrative or sensitive functions within the application.
-
-🛡️ **Solution:** The codebase was updated to fetch the secret key dynamically using `os.environ.get('SECRET_KEY')`. If the environment variable is not defined, it securely falls back to a dynamically generated random sequence using `os.urandom(24)`. This eliminates the hardcoded secret from the repository and follows security best practices for Flask applications.
