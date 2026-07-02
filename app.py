@@ -38,7 +38,7 @@ def login():
         password = request.form.get('password')
 
         user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -53,7 +53,7 @@ def logout():
 
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
@@ -65,7 +65,7 @@ documents=documents)
 
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
@@ -75,7 +75,7 @@ def approve_document():
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+            return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
@@ -150,16 +150,5 @@ def complete_corrective_action():
     return jsonify({'message': 'Corrective action completed successfully.'}), 200
 
 
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-{
-  "audit_date": "2023-09-01",
-  "auditor": "John Doe",
-  "findings": ["Finding 1", "Finding 2"]
-}
-{
-  "message": "Audit performed successfully."
-}
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
