@@ -1,0 +1,5 @@
+🔒 Fix missing authentication on /analysis endpoint
+
+🎯 **What:** Added an `is_authenticated()` check to the `/analysis` endpoint, making it consistent with other protected endpoints.
+⚠️ **Risk:** The lack of an authentication check allowed any unauthorized user to submit data to the analysis tool, which might expose the application to unintended operations, DOS, or unauthenticated data exfiltration depending on what the `Analysis` class does.
+🛡️ **Solution:** Added a check that returns a JSON response with status code 401 if the user is not authenticated. Also added unit tests in `tests/test_analysis.py` to cover both unauthenticated and authenticated flows. Also fixed multiple indentation syntax errors present in app.py.
