@@ -38,7 +38,7 @@ def login():
         password = request.form.get('password')
 
         user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
             session['username'] = username
             return redirect(url_for('index'))
         else:
@@ -53,7 +53,7 @@ def logout():
 
 @app.route('/add_nonconformity', methods=['POST'])
 def add_nonconformity():
-   if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     description = request.form.get('description')
     severity = request.form.get('severity')
@@ -65,7 +65,7 @@ documents=documents)
 
 @app.route('/approve_document', methods=['POST'])
 def approve_document():
-  if not is_authenticated():
+    if not is_authenticated():
         return redirect(url_for('login'))
     document_id = request.form.get('document_id')
     action = request.form.get('action')
@@ -75,21 +75,25 @@ def approve_document():
             document['status'] = 'Approved'
         elif action == 'Reject':
             document['status'] = 'Rejected'
-          return redirect(url_for('index'))
+            return redirect(url_for('index'))
     return render_template('index.html', nonconformities=nonconformities, documents=documents)
 
 @app.route('/audit', methods=['POST'])
 def perform_audit():
+    if not request.is_json:
+        return jsonify({'error': 'Request must be JSON'}), 400
+    data = request.json
+    if not all(k in data for k in ('audit_date', 'auditor', 'findings')):
+        return jsonify({'error': 'Missing required fields'}), 400
    
-    audit = Audit(audit_date=request.json['audit_date'],
-                  auditor=request.json['auditor'],
-                  findings=request.json['findings'])
+    audit = Audit(audit_date=data['audit_date'],
+                  auditor=data['auditor'],
+                  findings=data['findings'])
     audit.add_finding('Additional finding')
     audit.print_report()
 
    
     return jsonify({'message': 'Audit performed successfully.'}), 200
-
 @app.route('/risk-assessment', methods=['POST'])
 def perform_risk_assessment():
     
