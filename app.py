@@ -113,6 +113,8 @@ def perform_analysis():
 
 @app.route('/non-conformity', methods=['POST'])
 def create_non_conformity():
+    if not is_authenticated():
+        return jsonify({"message": "Unauthorized"}), 401
     data = request.json
     non_conformity = NonConformity(data['id'], data['description'], data['impact'])
     # Perform any additional actions, such as assigning or closing the non-conformity
